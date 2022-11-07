@@ -23,7 +23,7 @@ const Seo = (props) => {
 
     const url = props.pagePath ? data.site.siteMetadata.siteUrl + props.pagePath : data.site.siteMetadata.siteUrl
 
-    const imgUrl = props.pageImg ? data.site.siteMetadata.siteUrl + props.pageImg :data.site.siteMetadata.siteUrl + `/thumb.jpg`
+    const imgUrl = props.pageImg ? data.site.siteMetadata.siteUrl + props.pageImg :props.blogImg || data.site.siteMetadata.siteUrl + `/thumb.jpg`
 
     const imgW = props.pageImgW || 1280;
     const imgH = props.pageImgH || 640;

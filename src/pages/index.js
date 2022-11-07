@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import { GatsbyImage,StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
@@ -68,6 +68,28 @@ const IndexPage = ({data}) => {
         </figure>
       </section>
 
+      <section className="content bloglist">
+            <div className="container">
+                <h1 className="bar">RECENT POSTS</h1>
+                <div className="posts">
+                    {data.allContentfulBlogPost.edges.map(({node}) => (
+                        <article className="post" key={node.id}>
+                            <Link to={`/blog/post/${node.slug}/`}>
+                                <figure>
+                                <GatsbyImage
+                                    image={node.eyecatch.gatsbyImageData}
+                                    alt={node.eyecatch.description}
+                                    style={{ height: "100%" }}
+                                />
+                                </figure>
+                                <h3>{node.title}</h3>
+                            </Link>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        </section>
+
     </Layout>
   )
 }
@@ -101,4 +123,16 @@ query{
       gatsbyImageData(layout: FULL_WIDTH)
     }
   }
+  allContentfulBlogPost(sort: {order: DESC, fields: publishDate} skip:0 limit:4) {
+            edges {
+                node {
+                    title
+                    id
+                    eyecatch {
+                        gatsbyImageData(width:573, layout: CONSTRAINED)
+                        description
+                    }
+                }
+            }
+        }
 }`
