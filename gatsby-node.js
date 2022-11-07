@@ -25,6 +25,11 @@ exports.createPages = async({ graphql, actions, reporter }) => {
         edges {
           node {
             categorySlug
+            id
+            category
+            blogpost {
+              title
+            }
           }
         }
       }
@@ -69,17 +74,25 @@ exports.createPages = async({ graphql, actions, reporter }) => {
   })
 
   blogresult.data.allContentfulCategory.edges.forEach(({node}) => {
-    createPage({
-      path: `/cat/${node.categorySlug}/`,
-      component: path.resolve(`./src/templates/cat-template.js`),
-      context: {
-        catid: node.id,
-        skip: 0,
-        limit: 100,
-        currentPage: 1,
-        isFirst: true,
-        isLast: true
-      }
+    const catPostsPerPage = 6 //１ページに表示する記事の数
+    const catPosts = node.blogpost.length //記事の総数
+    const catPages = Math.ceil(catPosts / catPostsPerPage) //記事一覧ページの総数
+
+    Array.from({ length: catPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/cat/${node.categorySlug}/` : `/cat/${node.categorySlug}/${i + 1}`,
+        component: path.resolve(`./src/templates/cat-template.js`),
+        context: {
+          catId: node.id,
+          catName: node.category,
+          catSlug: node.categorySlug,
+          skip: catPostsPerPage * i,
+          limit: catPostsPerPage,
+          currentPage: i + 1,
+          isFirst: i + 1 === 1,
+        isLast: i + 1 === catPages
+        }
+      })
     })
   })
 }

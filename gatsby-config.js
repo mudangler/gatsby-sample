@@ -39,9 +39,9 @@ module.exports = {
       {
         resolve: `gatsby-source-contentful`,
         options: {
-          spaceId: process.env.CONTENTFUL_SPACE_ID,
-          accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-          host:process.env.CONTENTFUL_HOST
+          spaceId: "xs1wnk3azbgp",
+          accessToken: "4b0sc65Wx9AcTOOHHNvInWr7O2hKXqcJFZJi15VX1rc",
+          host: "cdn.contentful.com"
         },
       },
     ],

@@ -10,10 +10,10 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 const CategoryPage = ({data, location, pageContext }) => {
     return (
         <Layout>
-            <Seo pageTitle="ブログ" pageDesc="ESSENTIALSのブログです" pagePath={location.pathname} />
+            <Seo pageTitle={`CATEGORY: ${pageContext.catName}`} pageDesc={`「${pageContext.catName}」カテゴリーの記事です`} pagePath={location.pathname} />
             <section className="content bloglist">
                 <div className="container">
-                    <h1 className="bar">RECENT POSTS</h1>
+                    <h1 className="bar">CATEGORY: {pageContext.catName}</h1>
                     { data ?
                     (<div className="posts">
                         {data.allContentfulBlogPost.edges.map(({node}) => (
@@ -37,8 +37,8 @@ const CategoryPage = ({data, location, pageContext }) => {
                             <Link
                                 to={
                                     pageContext.currentPage === 2
-                                    ? `/cat/`
-                                    : `/cat/${pageContext.currentPage - 1}/`
+                                    ? `/cat/${pageContext.catSlug}/`
+                                    : `/cat/${pageContext.catSlug}/${pageContext.currentPage - 1}/`
                                 }
                                 rel="prev">
                                 <FontAwesomeIcon icon={faChevronLeft} />
@@ -48,7 +48,7 @@ const CategoryPage = ({data, location, pageContext }) => {
                     {!pageContext.isLast && (
                         <li className="next">
                             <Link
-                                to={`/cat/${pageContext.currentPage + 1}/`
+                                to={`/cat/${pageContext.catSlug}/${pageContext.currentPage + 1}/`
                                 } rel="next">
                                     <span>次のページ</span>
                                 <FontAwesomeIcon icon={faChevronRight} />
@@ -64,12 +64,12 @@ const CategoryPage = ({data, location, pageContext }) => {
 export default CategoryPage
 
 export const query = graphql`
-    query( $catid: String!, $skip: Int!, $limit: Int!) {
+    query( $catId: String!, $skip: Int!, $limit: Int!) {
         allContentfulBlogPost(
             sort: {order: DESC, fields: publishDate}
             skip:$skip
             limit:$limit
-            filter: {category: {elemMatch: {id: {eq:  $catid}}}}
+            filter: {category: {elemMatch: {id: {eq:  $catId}}}}
         ) {
             edges {
                 node {
