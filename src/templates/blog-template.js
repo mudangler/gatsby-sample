@@ -38,7 +38,7 @@ const BlogPage = ({data,location, pageContext }) => {
                     <li className="prev">
                         <Link
                          to={
-                            pageContext.currentPage == 2
+                            pageContext.currentPage === 2
                             ? `/blog/`
                             : `/blog/${pageContext.currentPage - 1}/`
                          }

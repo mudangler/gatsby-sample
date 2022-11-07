@@ -5,69 +5,72 @@ import { StaticImage,GatsbyImage } from "gatsby-plugin-image"
 import { graphql,Link } from 'gatsby'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-    faChevronLeft,
-    faChevronRight,
-  } from "@fortawesome/free-solid-svg-icons"
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 
-const BlogPage = ({data,location, pageContext }) => {
-  return (
-    <Layout>
-        <Seo pageTitle="ブログ" pageDesc="ESSENTIALSのブログです" pagePath={location.pathname} />
-        <section className="content bloglist">
-            <div className="container">
-                <h1 className="bar">RECENT POSTS</h1>
-                <div className="posts">
-                    {data.allContentfulBlogPost.edges.map(({node}) => (
-                        <article className="post" key={node.id}>
-                            <Link to={`/blog/post/${node.slug}/`}>
-                                <figure>
-                                <GatsbyImage
-                                    image={node.eyecatch.gatsbyImageData}
-                                    alt={node.eyecatch.description}
-                                    style={{ height: "100%" }}
-                                />
-                                </figure>
-                                <h3>{node.title}</h3>
-                            </Link>
-                        </article>
-                    ))}
-                </div>
-                <ul className="pagenation">
+const CategoryPage = ({data, location, pageContext }) => {
+    return (
+        <Layout>
+            <Seo pageTitle="ブログ" pageDesc="ESSENTIALSのブログです" pagePath={location.pathname} />
+            <section className="content bloglist">
+                <div className="container">
+                    <h1 className="bar">RECENT POSTS</h1>
+                    { data ?
+                    (<div className="posts">
+                        {data.allContentfulBlogPost.edges.map(({node}) => (
+                            <article className="post" key={node.id}>
+                                <Link to={`/blog/post/${node.slug}/`}>
+                                    <figure>
+                                    <GatsbyImage
+                                        image={node.eyecatch.gatsbyImageData}
+                                        alt={node.eyecatch.description}
+                                        style={{ height: "100%" }}
+                                    />
+                                    </figure>
+                                    <h3>{node.title}</h3>
+                                </Link>
+                            </article>
+                        ))}
+                    </div>) : <p>{pageContext.catid}</p>}
+                    <ul className="pagenation">
                     {!pageContext.isFirst && (
-                    <li className="prev">
-                        <Link
-                         to={
-                            pageContext.currentPage == 2
-                            ? `/blog/`
-                            : `/blog/${pageContext.currentPage - 1}/`
-                         }
-                         rel="prev">
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                            <span>前のページ</span>
-                        </Link>
-                    </li>)}
+                        <li className="prev">
+                            <Link
+                                to={
+                                    pageContext.currentPage === 2
+                                    ? `/cat/`
+                                    : `/cat/${pageContext.currentPage - 1}/`
+                                }
+                                rel="prev">
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                                <span>前のページ</span>
+                            </Link>
+                        </li>)}
                     {!pageContext.isLast && (
-                    <li className="next">
-                        <Link
-                         to={`/blog/${pageContext.currentPage + 1}/`
-                         } rel="next">
-                            <span>次のページ</span>
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </Link>
-                    </li>)}
-                </ul>
-            </div>
-        </section>
-    </Layout>
-  )
+                        <li className="next">
+                            <Link
+                                to={`/cat/${pageContext.currentPage + 1}/`
+                                } rel="next">
+                                    <span>次のページ</span>
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </Link>
+                        </li>)}
+                    </ul>
+                </div>
+            </section>
+        </Layout>
+    )
 }
 
-export default BlogPage
+export default CategoryPage
 
 export const query = graphql`
-  query($skip: Int!, $limit: Int!) {
-        allContentfulBlogPost(sort: {order: DESC, fields: publishDate} skip:$skip limit:$limit) {
+    query( $catid: String!, $skip: Int!, $limit: Int!) {
+        allContentfulBlogPost(
+            sort: {order: DESC, fields: publishDate}
+            skip:$skip
+            limit:$limit
+            filter: {category: {elemMatch: {id: {eq:  $catid}}}}
+        ) {
             edges {
                 node {
                     title
