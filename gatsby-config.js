@@ -28,7 +28,7 @@ module.exports = {
           name: `ESSENTIALS エッセンシャルズ`,
           short_name: `ESSENTIALS`,
           start_url: `/`,
-          background_color: `#fffff`,
+          background_color: `#ffffff`,
           theme_color: `#477294`,
           display: `standalone`,
           icon: `src/images/icon.png`
