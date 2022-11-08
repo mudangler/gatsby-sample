@@ -1,5 +1,5 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { graphql, useStaticQuery } from "gatsby"
 
 const Seo = (props) => {
@@ -29,25 +29,27 @@ const Seo = (props) => {
     const imgH = props.pageImgH || 640;
 
     return (
-        <Helmet>
-            <html lang={data.site.siteMetadata.lang} />
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <link rel="canonical" href={url} />
+        <HelmetProvider>
+            <Helmet>
+                <html lang={data.site.siteMetadata.lang} />
+                <title>{title}</title>
+                <meta name="description" content={description} />
+                <link rel="canonical" href={url} />
 
-            <meta property="og:site_name" content={data.site.siteMetadata.title} />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:url" content={url} />
-            <meta property="og:type" content="website" />
-            <meta property="og:locale" content={data.site.siteMetadata.locale} />
-            <meta property="fb:app_id" content={data.site.siteMetadata.fbappid} />
-            <meta property="og:image" content={imgUrl} />
-            <meta property="og:image:width" content={imgW} />
-            <meta property="og:image:height" content={imgH} />
+                <meta property="og:site_name" content={data.site.siteMetadata.title} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:url" content={url} />
+                <meta property="og:type" content="website" />
+                <meta property="og:locale" content={data.site.siteMetadata.locale} />
+                <meta property="fb:app_id" content={data.site.siteMetadata.fbappid} />
+                <meta property="og:image" content={imgUrl} />
+                <meta property="og:image:width" content={imgW} />
+                <meta property="og:image:height" content={imgH} />
 
-            <meta name="twitter:card" content="summary_large_image" />
-        </Helmet>
+                <meta name="twitter:card" content="summary_large_image" />
+            </Helmet>
+        </HelmetProvider>
     )
 }
 
