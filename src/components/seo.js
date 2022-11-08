@@ -1,8 +1,7 @@
 import React from "react"
-import Helmet from "react-helmet"
 import { graphql, useStaticQuery } from "gatsby"
 
-const Seo = (props) => {
+const Seo = (props, children) => {
     const data = useStaticQuery(graphql`
     query{
         site{
@@ -29,8 +28,7 @@ const Seo = (props) => {
     const imgH = props.pageImgH || 640;
 
     return (
-        <Helmet>
-            <html lang={data.site.siteMetadata.lang} />
+        <>
             <title>{title}</title>
             <meta name="description" content={description} />
             <link rel="canonical" href={url} />
@@ -45,9 +43,9 @@ const Seo = (props) => {
             <meta property="og:image" content={imgUrl} />
             <meta property="og:image:width" content={imgW} />
             <meta property="og:image:height" content={imgH} />
-
             <meta name="twitter:card" content="summary_large_image" />
-        </Helmet>
+            {children}
+        </>
     )
 }
 

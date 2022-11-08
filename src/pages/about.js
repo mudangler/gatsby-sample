@@ -8,17 +8,21 @@ import Seo from "../components/seo"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUtensils, faCheckSquare } from "@fortawesome/free-solid-svg-icons"
 
-const AboutPage = ({data,location}) => {
-  return (
-    <Layout>
-      <Seo
+export const Head = ({ data,location }) => (
+  <Seo
       pageTitle={`ESSENTIALSについて`}
       pageDesc={'食べ物についての情報を発信しているサイトです'}
       pagePath={location.pathname}
       pageImg={data.about.childImageSharp.original.src}
       pageImgH={data.about.childImageSharp.original.height}
       pageImgW={data.about.childImageSharp.original.width}
-      />
+  />
+)
+
+const AboutPage = ({data}) => {
+  return (
+    <Layout>
+
         <div>
         <div className="eyecatch">
             <figure>

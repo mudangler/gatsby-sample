@@ -6,10 +6,13 @@ import Layout from "../components/layout"
 
 import Seo from "../components/seo"
 
+export const Head = () => (
+  <Seo />
+)
+
 const IndexPage = ({data}) => {
   return (
     <Layout>
-      <Seo />
       <section className="hero">
         <figure>
         {/* <GatsbyImage image={data.hero.childImageSharp.gatsbyImageData} alt="" /> */}

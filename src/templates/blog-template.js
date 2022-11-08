@@ -8,12 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
     faChevronLeft,
     faChevronRight,
-  } from "@fortawesome/free-solid-svg-icons"
+} from "@fortawesome/free-solid-svg-icons"
 
-const BlogPage = ({data,location, pageContext }) => {
+export const Head = ({location}) => (
+    <Seo pageTitle="ブログ" pageDesc="ESSENTIALSのブログです" pagePath={location.pathname} />
+)
+
+const BlogPage = ({data, pageContext }) => {
   return (
     <Layout>
-        <Seo pageTitle="ブログ" pageDesc="ESSENTIALSのブログです" pagePath={location.pathname} />
         <section className="content bloglist">
             <div className="container">
                 <h1 className="bar">RECENT POSTS</h1>

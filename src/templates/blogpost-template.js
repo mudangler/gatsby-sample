@@ -39,12 +39,21 @@ const options = {
     },
 }
 
+export const Head = ({data,location}) => (
+    <Seo
+        pagePath={location.pathname}
+        pageImgW={data.contentfulBlogPost.eyecatch.file.details.image.width}
+        pageImgH={data.contentfulBlogPost.eyecatch.file.details.image.height}
+        blogImg={`https:${data.contentfulBlogPost.eyecatch.file.url}`}
+        pageTitle={data.contentfulBlogPost.title}
+        pageDesc={`${documentToPlainTextString(
+        JSON.parse(data.contentfulBlogPost.content.raw)).slice(0, 70)}...`}
+    />
+)
+
 const BlogPost = ({data, pageContext,location}) => {
   return (
     <Layout>
-        <Seo pagePath={location.pathname} pageImgW={data.contentfulBlogPost.eyecatch.file.details.image.width} pageImgH={data.contentfulBlogPost.eyecatch.file.details.image.height} blogImg={`https:${data.contentfulBlogPost.eyecatch.file.url}`} pageTitle={data.contentfulBlogPost.title} pageDesc={`${documentToPlainTextString(
-  JSON.parse(data.contentfulBlogPost.content.raw)
-).slice(0, 70)}...`}/>
         <div className="eyecatch">
             <figure>
             <GatsbyImage image={data.contentfulBlogPost.eyecatch.gatsbyImageData} alt={data.contentfulBlogPost.eyecatch.description}/>

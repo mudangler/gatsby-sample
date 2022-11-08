@@ -7,10 +7,13 @@ import { graphql,Link } from 'gatsby'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 
-const CategoryPage = ({data, location, pageContext }) => {
+export const Head = ({location,pageContext}) => (
+    <Seo pageTitle={`CATEGORY: ${pageContext.catName}`} pageDesc={`「${pageContext.catName}」カテゴリーの記事です`} pagePath={location.pathname} />
+)
+
+const CategoryPage = ({data, pageContext }) => {
     return (
         <Layout>
-            <Seo pageTitle={`CATEGORY: ${pageContext.catName}`} pageDesc={`「${pageContext.catName}」カテゴリーの記事です`} pagePath={location.pathname} />
             <section className="content bloglist">
                 <div className="container">
                     <h1 className="bar">CATEGORY: {pageContext.catName}</h1>
