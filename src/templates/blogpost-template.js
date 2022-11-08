@@ -118,6 +118,7 @@ query($id: String!) {
         category {
             category
             categorySlug
+            id
         }
         eyecatch {
             gatsbyImageData(layout: FULL_WIDTH)
